@@ -15,4 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag docker/whalsay:$(date +%s)
+      run: docker build . --file Dockerfile --tag docker/whalsay && docker save docker/whalsay -o runtime_img.tar 
+    - name: Store image
+      uses: actions/upload-artifact@v2
+      with:
+        name: docker-image
+        path: runtime_img.tar
